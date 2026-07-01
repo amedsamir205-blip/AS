@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ahmed Life OS — Your personal life operating system">
+  <meta name="theme-color" content="#0d9488">
+
+  <!-- PWA Meta -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Life OS">
+
+  <title>Ahmed Life OS</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/modals.css">
+  <link rel="stylesheet" href="styles/pages.css">
+
+  <style>
+    /* Inline critical styles */
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 9999;
+      transition: opacity 0.4s ease;
+    }
+    [data-theme="dark"] #page-loader { background: #0f172a; }
+    #page-loader.fade-out { opacity: 0; pointer-events: none; }
+    .loader-logo {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #0d9488, #14b8a6);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 8px 32px rgba(13,148,136,0.3);
+      animation: loader-pulse 1.2s ease infinite;
+    }
+    @keyframes loader-pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .loader-title {
+      font-family: Inter, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    [data-theme="dark"] .loader-title { color: #f1f5f9; }
+    .loader-sub {
+      font-family: Inter, sans-serif;
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+    .loader-bar-wrap {
+      width: 200px; height: 4px;
+      background: #e2e8f0;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .loader-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #0d9488, #14b8a6);
+      border-radius: 9999px;
+      animation: loader-bar 1.5s ease-in-out infinite;
+    }
+    @keyframes loader-bar {
+      0% { width: 0; }
+      50% { width: 70%; }
+      100% { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div id="page-loader">
+    <div class="loader-logo">🌟</div>
+    <div class="loader-title">Ahmed Life OS</div>
+    <div class="loader-sub">Loading your workspace...</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- App Root -->
+  <div id="app"></div>
+
+  <!-- App Module -->
+  <script type="module" src="app.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
